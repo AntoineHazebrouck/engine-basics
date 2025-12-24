@@ -5,12 +5,15 @@ namespace Scripts.Player;
 
 public partial class Player : CharacterBody3D
 {
-    [ExportGroup("Movement")]
+    [ExportGroup("Movement variables")]
     [Export]
     private float BaseMovementSpeed = 10;
 
     [Export]
     private float BaseRotationSpeed = 6;
+
+    [Export]
+    private float JumpSpeed = 10f;
 
     [ExportGroup("References")]
     [Export]
@@ -59,7 +62,16 @@ public partial class Player : CharacterBody3D
     public override void _Process(double delta)
     {
         HandleRotation();
+        HandleJump();
         HandleMovement();
         MoveAndSlide();
+    }
+
+    private void HandleJump()
+    {
+        if (Input.IsActionJustPressed("jump") && IsOnFloor())
+        {
+            Velocity = new Vector3(Velocity.X, JumpSpeed, Velocity.Z);
+        }
     }
 }
