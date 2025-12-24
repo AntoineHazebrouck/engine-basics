@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://nxbqegwhlggg"]
+
+[ext_resource type="PackedScene" uid="uid://wao28mlxn1iu" path="res://player.tscn" id="1_bri2l"]
+[ext_resource type="Script" uid="uid://bef6dw7jtob8n" path="res://Scripts/Debugger.cs" id="2_dvup1"]
+[ext_resource type="Script" uid="uid://dipvigbpu0y3f" path="res://Scripts/Player/Player.cs" id="2_kdijb"]
+[ext_resource type="PackedScene" uid="uid://dp3gtlkrnx1j2" path="res://Scenes/an_object.tscn" id="3_3imfn"]
+[ext_resource type="Script" uid="uid://dxqmi6yo6qay6" path="res://Scripts/GameManager.cs" id="4_iafiv"]
+
+[node name="Level_01" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_bri2l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.825325, 0)
+script = ExtResource("2_kdijb")
+gravity = 32.0
+maxFallSpeed = 50.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.94895864, 0.3154006, 0, -0.3154006, 0.94895864, 0, 8.124992, 0)
+light_color = Color(0.99999887, 0.99872416, 0.7948448, 1)
+
+[node name="Debugger" type="Node3D" parent="."]
+script = ExtResource("2_dvup1")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Environment"]
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+size = Vector3(10, 0.5, 10)
+
+[node name="Wall1" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+use_collision = true
+size = Vector3(10, 10, 1)
+
+[node name="Door" type="CSGBox3D" parent="Environment/CSGCombiner3D/Wall1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+operation = 2
+size = Vector3(5, 7.5, 1)
+
+[node name="Wall2" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5)
+use_collision = true
+size = Vector3(10, 10, 1)
+
+[node name="Wall3" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -5, 5, 0)
+use_collision = true
+size = Vector3(10, 10, 1)
+
+[node name="Wall4" type="CSGBox3D" parent="Environment/CSGCombiner3D"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5, 5, 0)
+use_collision = true
+size = Vector3(10, 10, 1)
+
+[node name="AnObject" parent="." instance=ExtResource("3_3imfn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 7)
+
+[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("AnObject")]
+script = ExtResource("4_iafiv")
+AnObject = NodePath("../AnObject")
