@@ -7,7 +7,7 @@ public partial class Player : CharacterBody3D
 {
     [ExportGroup("Movement")]
     [Export]
-    private float BaseMovementSpeed = 5;
+    private float BaseMovementSpeed = 10;
 
     [Export]
     private float BaseRotationSpeed = 6;
@@ -21,7 +21,9 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledKeyInput(InputEvent @event)
     {
-        Movement = Input.GetVector("move_right", "move_left", "move_backward", "move_forward");
+        Movement = Input
+            .GetVector("move_right", "move_left", "move_backward", "move_forward")
+            .Normalized();
     }
 
     private void HandleMovement()

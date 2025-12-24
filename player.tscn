@@ -9,10 +9,9 @@ size = Vector3(0.25, 0.25, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("model")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_4flbx")
-model = NodePath("Body")
-gravity = 10000.0
+Model = NodePath("Body")
 
 [node name="Body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_sh265")
