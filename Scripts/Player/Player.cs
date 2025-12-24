@@ -17,13 +17,11 @@ public partial class Player : CharacterBody3D
     private Vector2 Movement = Vector2.Zero;
 
     [Export]
-    private Node3D model;
+    private Node3D Model;
 
     public override void _UnhandledKeyInput(InputEvent @event)
     {
         Movement = Input.GetVector("move_right", "move_left", "move_backward", "move_forward");
-
-        // Movement = new Vector3(direction.X, 0, direction.Y).Normalized();
     }
 
     private void HandleMovement()
@@ -38,17 +36,17 @@ public partial class Player : CharacterBody3D
 
     private void HandleRotation()
     {
-        if (model == null || Movement == Vector2.Zero)
+        if (Model == null || Movement == Vector2.Zero)
             return;
 
         float targetAngle = Mathf.Atan2(Movement.X, Movement.Y);
         float smoothAngle = Mathf.LerpAngle(
-            model.Rotation.Y,
+            Model.Rotation.Y,
             targetAngle,
             (float)(GetProcessDeltaTime() * BaseRotationSpeed)
         );
 
-        model.Rotation = new Vector3(model.Rotation.X, smoothAngle, model.Rotation.Z);
+        Model.Rotation = new Vector3(Model.Rotation.X, smoothAngle, Model.Rotation.Z);
     }
 
     public override void _Ready()
